@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">base</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="left_category_name_history">历史记录</string>
+    <string name="left_category_ename_history">History</string>
+    <array name="array_left_category_name">
+        <item>定位</item>
+        <item>伪基站记录</item>
+        <item>拦截短信记录</item>
+        <item>我的备份</item>
+        <item>黑名单</item>
+        <item>关键字</item>
+        <item>设置</item>
+    </array>
+    <array name="array_left_category_ename">
+        <item>History</item>
+        <item>Pseudo-base record</item>
+        <item>SMS interception record</item>
+        <item>My backup</item>
+        <item>Blacklist</item>
+        <item>Key</item>
+        <item>Setting</item>
+    </array>
+    <array name="listview_title">
+        <item>本区LAC</item>
+        <item>本区CID</item>
+        <item>邻区LAC</item>
+        <item>邻区CID</item>
+        <item>邻区信号强度</item>
+    </array>
+<array name="listview_basetitle">
+    <item>移动国家码MCC</item>
+    <item>移动网络码MNC</item>
+    <item>IMEI</item>
+    <item>IMSI</item>
+    <item>设备的软件版本号</item>
+    <item>服务商名称</item>
+    <item>手机SIM卡序列号</item>
+    <item>手机类型</item>
+    <item>数据连接</item>
+    <item>是否漫游</item>
+</array>
+
+
+    <string name="aboutapptext">欢迎使用本软件。</string>
+
+    <string name="phoneinfobutton">手机信息</string>
+    <string name="baseinfobutton">基站信息</string>
+    <string name="msginfobutton">短信拦截</string>
+    <string name="statisticsinfobutton">统计信息</string>
+    <string name="msginfomsgset">短信拦截设置</string>
+    <string name="list_item_tv">黑名单拦截</string>
+    <string name="addbad">添加自定义</string>
+    <string name="location">定位</string>
+    <string name="title_activity_show">ShowActivity</string>
+    <string name="setbadtext">自定义拦截设置</string>
+
+</resources>
