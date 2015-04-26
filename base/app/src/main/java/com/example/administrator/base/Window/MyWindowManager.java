@@ -17,9 +17,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-/**
- * Created by Administrator on 2015/3/22.
- */
 public class MyWindowManager {
     /**
      * 小悬浮窗View的实例

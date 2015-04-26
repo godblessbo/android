@@ -46,7 +46,7 @@ public class SetBad extends Activity {
         Intent intent = getIntent();
         numorword = intent.getBooleanExtra("numorword", false);
         //   word是true，num是false
-        if (numorword == true) {
+        if (numorword) {
             table = "word_table";
             column = "badword";
             dialogmessage = "添加拦截关键字";
@@ -92,7 +92,7 @@ public class SetBad extends Activity {
             View view = inflater.inflate(R.layout.sqlitedialog, null);
             final EditText edit = (EditText) view.findViewById(R.id.edit);
             edit.setInputType(InputType.TYPE_CLASS_PHONE);
-            if (numorword == true) {
+            if (numorword) {
                 edit.setInputType(InputType.TYPE_CLASS_TEXT);
             }
             // TODO Auto-generated method stub

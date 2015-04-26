@@ -2,7 +2,6 @@ package com.example.administrator.base.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,23 +15,19 @@ import com.example.administrator.base.R;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2014/12/16.
- */
+
 //设置左边缘滑出界面的adapter
 public class LeftCategoryAdapter extends BaseAdapter {
-    private Context mContext;
     private List<ItemCategoryModel> mLists;
     private LayoutInflater mLayoutInflater;
-    private  int height;
+    private int height;
 
 
     public LeftCategoryAdapter(Context mContext, List<ItemCategoryModel> mLists) {
-        this.mContext = mContext;
         this.mLists = mLists;
-        mLayoutInflater = LayoutInflater.from(this.mContext);
-        WindowManager windowManager=(WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
-        height=windowManager.getDefaultDisplay().getHeight();
+        mLayoutInflater = LayoutInflater.from(mContext);
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        height = windowManager.getDefaultDisplay().getHeight();
     }
 
     @Override
@@ -54,7 +49,7 @@ public class LeftCategoryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Holder _Holder = null;
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,height/7);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, height / 7);
 
         if (convertView == null) {
             _Holder = new Holder();

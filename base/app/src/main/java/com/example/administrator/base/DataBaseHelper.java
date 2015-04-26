@@ -38,7 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("Create table word_table(id INTEGER PRIMARY KEY AUTOINCREMENT, badword varchar(30)UNIQUE )");
 
-        //0代表正常短信，1代表垃圾短信，2代表伪基站短信，3代表诈骗短信，4代表黑名单
+        //0代表正常短信，1代表垃圾短信，2代表伪基站短信，3代表诈骗短信，4代表黑名单,9私密短信
         db.execSQL("Create table msg_table(id INTEGER PRIMARY KEY AUTOINCREMENT, recievenum varchar(30),recievebody varchar(150),flag int)");
     }
 

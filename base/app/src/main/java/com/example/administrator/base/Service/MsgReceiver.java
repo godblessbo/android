@@ -22,7 +22,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class MsgReceiver extends BroadcastReceiver {
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     String centernumber = "";
@@ -220,8 +219,7 @@ public class MsgReceiver extends BroadcastReceiver {
             Intent it = new Intent(context, ShowDialog.class);
             it.putExtra("smsNumber", SmsNumber);
             it.putExtra("Body", Body);
-            System.out.print("Reciever里面的flag======== " + flag);
-            it.putExtra("flag", flag);    //0代表正常短信，1代表垃圾短信，2代表伪基站短信，3代表诈骗短信，4代表黑名单
+            it.putExtra("flag", flag);    //0代表正常短信，1代表垃圾短信，2代表伪基站短信
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(it);
         } else {
@@ -231,9 +229,7 @@ public class MsgReceiver extends BroadcastReceiver {
             SQLiteDatabase db = dbhelper.getWritableDatabase();
             values.put("recievenum", SmsNumber);
             values.put("recievebody", Body);
-            System.out.print("Reciever里面的flag======== " + flag);
             values.put("flag", 0);
-
             db.insert("msg_table", null, values);
         }
     }

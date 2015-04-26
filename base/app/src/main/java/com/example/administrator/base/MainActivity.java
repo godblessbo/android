@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.administrator.base.Service.WindowService;
 import com.example.administrator.base.framegent.pageFramgent.LefeCategoryFramgent;
 import com.example.administrator.base.framegent.pageFramgent.BasestPage;
 import com.example.administrator.base.framegent.pageFramgent.MsmPage;
@@ -42,10 +41,14 @@ public class MainActivity extends SlidingFragmentActivity {
         // 只有调用了databasehelper对象的getreadabledatabase（）方法或是getwriteabledatabase方法才会创建或打开数据库
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+
+        Intent intent = new Intent(MainActivity.this, fbService.class);
+        startService(intent);
+
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         initSlidingMenu();
         initView();
-        initvaliData();
         initListener();
     }
 
@@ -77,13 +80,6 @@ public class MainActivity extends SlidingFragmentActivity {
 
 
     }
-
-    private void initvaliData() {
-       // Intent intent=new Intent(MainActivity.this, WindowService.class);
-       // startService(intent);
-
-    }
-
 
 
     private void initListener() {

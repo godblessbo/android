@@ -2,7 +2,6 @@ package com.example.administrator.base.Service;
 
 
 import android.app.AlertDialog;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -20,9 +19,7 @@ public class fbService extends Service {
     private int test2 = 0; // 信号强度太大
     private int test3 = 0; // 频繁的Lac变化
     private int test4 = 0; // Lac，Cid号比较可疑
-    private int test5 = 0;//短信中心号码匹配
-
-    private TelephonyManager tm;
+    private int test5 = 0; //短信中心号码匹配
     private int signalbefore = 0, lacnow = 0, cidnow = 0, lacbefore = 0,
             signalnow = 0;
     boolean lacchange = false, istimeover = false;
@@ -43,7 +40,7 @@ public class fbService extends Service {
         settest5();    //判断短信中心号码是否变化
         signaltime = System.currentTimeMillis();// 获取服务创建时的时间
         /********************************************************************************************************************************  */
-        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         locationuse = (GsmCellLocation) tm.getCellLocation();
         lacnow = locationuse.getLac();// 当前Lac
         lacbefore = lacnow;
@@ -66,12 +63,12 @@ public class fbService extends Service {
                     if (istimeover) {
                         signalbefore = signalnow;
                         test1 = 0;//20秒以上说明正常，test1 表示信号强度跳变
-                        System.out.print("istimeover=" + istimeover + "\n");
+                        System.out.print("istimeover=" + true + "\n");
                     }
 
                     // 若是信号变化在20之内
                     else {
-                        System.out.print("istimeover=" + istimeover + "\n");
+                        System.out.print("istimeover=" + false + "\n");
                         // 信号强度升上升超过15的将test1 设置为60
                         if ((signalnow - signalbefore) >= 15) {
                             test1 = 60;
@@ -176,9 +173,10 @@ public class fbService extends Service {
     public void go() {
         // 出现绝对不可能的Lac和可疑的Lac；
         set1();
+        isdanger();
         //判断总的可疑度
         System.out.println("test1=" + test1 + " test2=" + test2 + " test3="
-                + test3 + " test4=" + test4 + "test5" + test5);
+                + test3 + " test4=" + test4 + " test5=" + test5);
     }
 
     /**
@@ -232,7 +230,7 @@ public class fbService extends Service {
      * ****总体评估可疑度**********************************************************************************************
      */
     public void isdanger() {
-        if (test1 + test2 + test3 + test4 >= 100) {
+        if (test1 + test2 + test3 + test4 + test5 >= 100) {
             System.out.println("dangerous!!!!!!!!!!!!!!!!!!!!!");
             showDialog();
         } else {
@@ -241,7 +239,6 @@ public class fbService extends Service {
     }
 
     void settest5() {
-
         if (isbasereal) {
             test5 = 0;
         } else {

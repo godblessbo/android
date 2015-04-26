@@ -1,9 +1,6 @@
 package com.example.administrator.base;
 
 
-import android.content.Intent;
-
-
 /**
  * 简体与繁体互相转换
  *

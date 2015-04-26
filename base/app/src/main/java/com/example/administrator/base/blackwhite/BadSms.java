@@ -44,7 +44,7 @@ public class BadSms extends Activity {
                     String body = cursor.getString(cursor.getColumnIndex("recievebody"));
                     String flagstr = cursor.getString(cursor.getColumnIndex("flag"));
                     int flag = Integer.parseInt(flagstr);
-                    if (clickfrom == 0 && flag != 9) {    //用户点击收件箱，筛选出未加密短信
+                    if (clickfrom == 3 && flag==1) {    //用户点击垃圾短信记录，筛选出未加密短信
                         HashMap<String, String> map = new HashMap<String, String>();
                         map.put("number", number);
                         map.put("body", body);

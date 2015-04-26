@@ -2,6 +2,8 @@ package com.example.administrator.base.framegent.pageFramgent;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.telephony.NeighboringCellInfo;
@@ -20,21 +22,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2014/12/21.
- */
 public class PhonePage extends Fragment {
     private View phonepage_view;
     private Context phonepage_context;
     private ListView phonepage_listview;
     private ListViewAdapter phonepage_adapter;
-    private List<Map<String, Object>> listItems;
     private Integer[] listview_img;//lsitview图片
     private String[] listview_title;//listview标题
     private String[] listview_text;//listview信息
-    private TelephonyManager telephony;
-    private GsmCellLocation gsmcelllocation;
-    String MyLac, MyCellID, NeighborLac, NeighborCellID , NeighborStrength;
+    String MyLac, MyCellID, NeighborLac, NeighborCellID, NeighborStrength;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +39,8 @@ public class PhonePage extends Fragment {
         if (phonepage_view == null) {
             phonepage_view = inflater.inflate(R.layout.phone_framelayout, container, false);
             phonepage_context = phonepage_view.getContext();
-            telephony =(TelephonyManager)phonepage_context.getSystemService(Context.TELEPHONY_SERVICE);
-            gsmcelllocation = (GsmCellLocation)telephony.getCellLocation();
+            TelephonyManager telephony = (TelephonyManager) phonepage_context.getSystemService(Context.TELEPHONY_SERVICE);
+            GsmCellLocation gsmcelllocation = (GsmCellLocation) telephony.getCellLocation();
             /**通过GsmCellLocation获取中国移动和联通 LAC 和cellID */
             MyLac = "" + gsmcelllocation.getLac();
             MyCellID = "" + gsmcelllocation.getCid();
@@ -53,7 +49,7 @@ public class PhonePage extends Fragment {
             List<NeighboringCellInfo> infoLists = telephony.getNeighboringCellInfo();
             for (NeighboringCellInfo info : infoLists) {
                 strength += (-133 + 2 * info.getRssi());// 获取邻区基站信号强度
-                NeighborLac =""+info.getLac();// 取出当前邻区的LAC
+                NeighborLac = "" + info.getLac();// 取出当前邻区的LAC
                 NeighborCellID = "" + info.getCid();// 取出当前邻区的CID
                 NeighborStrength = "" + strength;
             }
@@ -79,7 +75,7 @@ public class PhonePage extends Fragment {
                 R.drawable.biz_navigation_tab_pics, R.drawable.biz_navigation_tab_ties
         };
         listview_title = phonepage_context.getResources().getStringArray(R.array.listview_title);
-        listItems = getListItems();
+        List<Map<String, Object>> listItems = getListItems();
         phonepage_adapter = new ListViewAdapter(phonepage_context, listItems);
 
     }
@@ -99,4 +95,20 @@ public class PhonePage extends Fragment {
         }
         return listItems;
     }
+
+    public boolean isMobileConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mMobileNetworkInfo = mConnectivityManager
+                    .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (mMobileNetworkInfo != null) {
+                System.out.println("手机连接State:====" + mMobileNetworkInfo.getState());
+                return mMobileNetworkInfo.isAvailable();
+            }
+        }
+        return false;
+    }
+
+
 }

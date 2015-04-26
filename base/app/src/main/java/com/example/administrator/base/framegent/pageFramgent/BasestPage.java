@@ -1,11 +1,11 @@
 package com.example.administrator.base.framegent.pageFramgent;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
-import android.telephony.gsm.GsmCellLocation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2015/1/12.
- */
 public class BasestPage extends Fragment {
     private View basepage_view;
     private Context basepage_context;
     private ListView basepage_listview;
-    private ListViewAdapter basepage_adapter;
-    private List<Map<String, Object>> listItems;
     private Integer[] listview_img;//lsitview图片
-    private String[] listview_title;//listview标题
     private String[] listview_text;//listview信息
     private TelephonyManager telephony;
     String phonetype, datastate, DeviceSoftwareVersion, deviceid, networkoperator, SimSerialNumber;
@@ -37,25 +31,25 @@ public class BasestPage extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(basepage_view==null){
-            basepage_view=inflater.inflate(R.layout.basest_framelayout,container,false);
-            basepage_context=basepage_view.getContext();
-
+        if (basepage_view == null) {
+            basepage_view = inflater.inflate(R.layout.basest_framelayout, container, false);
+            basepage_context = basepage_view.getContext();
             initView();
             initvaliData();
             bindData();
         }
-             return basepage_view;
+
+        return basepage_view;
     }
 
 
     private void initView() {
-        telephony=(TelephonyManager)basepage_context.getSystemService(Context.TELEPHONY_SERVICE);
-        networkoperator=telephony.getNetworkOperator();
+        telephony = (TelephonyManager) basepage_context.getSystemService(Context.TELEPHONY_SERVICE);
+        networkoperator = telephony.getNetworkOperator();
         mcc = "移动国家码MCC:" + networkoperator.substring(0, 3);
         mnc = "移动网络码MNC:" + networkoperator.substring(3);
-        deviceid="IMEI:"+telephony.getDeviceId();
-        IMSI="IMSI : " + telephony.getSubscriberId();
+        deviceid = "IMEI:" + telephony.getDeviceId();
+        IMSI = "IMSI : " + telephony.getSubscriberId();
         DeviceSoftwareVersion = "设备的软件版本号：" + telephony.getDeviceSoftwareVersion();
         networkopenratorname = "服务商名称：" + telephony.getSimOperatorName();
         SimSerialNumber = "手机SIM卡序列号：" + telephony.getSimSerialNumber();
@@ -72,11 +66,11 @@ public class BasestPage extends Fragment {
             phonetype = "手机类型：未知";
         }
         if (telephony.getDataState() == 2) {
-            if (telephony.getNetworkType() == telephony.NETWORK_TYPE_EDGE) {
+            if (telephony.getNetworkType() == TelephonyManager.NETWORK_TYPE_EDGE) {
                 networktype = "(" + "EDGE" + "-移动2G)";
-            } else if (telephony.getNetworkType() == telephony.NETWORK_TYPE_GPRS) {
+            } else if (telephony.getNetworkType() == TelephonyManager.NETWORK_TYPE_GPRS) {
                 networktype = "(" + "GPRS" + "-联通2G)";
-            } else if (telephony.getNetworkType() == telephony.NETWORK_TYPE_CDMA) {
+            } else if (telephony.getNetworkType() == TelephonyManager.NETWORK_TYPE_CDMA) {
                 networktype = "(" + "CDMA" + "-电信2G)";
             }
             datastate = "数据连接 ： " + "已连接" + networktype;
@@ -85,12 +79,11 @@ public class BasestPage extends Fragment {
 
         }
 
-        if (telephony.isNetworkRoaming() == true) {
+        if (telephony.isNetworkRoaming()) {
             roaming = "是否漫游：" + "是";
         } else {
             roaming = "是否漫游：" + "否";
         }
-
 
 
     }
@@ -99,19 +92,19 @@ public class BasestPage extends Fragment {
         listview_img = new Integer[]{R.drawable.biz_navigation_tab_local_news,
                 R.drawable.biz_navigation_tab_micro, R.drawable.biz_navigation_tab_news,
                 R.drawable.biz_navigation_tab_pics, R.drawable.biz_navigation_tab_ties,
-                R.drawable.biz_navigation_tab_local_news,R.drawable.biz_navigation_tab_local_news,
+                R.drawable.biz_navigation_tab_local_news, R.drawable.biz_navigation_tab_local_news,
                 R.drawable.biz_navigation_tab_ties, R.drawable.biz_navigation_tab_pics,
                 R.drawable.biz_navigation_tab_local_news
         };
 
-        listview_title = basepage_context.getResources().getStringArray(R.array.listview_basetitle);
+        String[] listview_title = basepage_context.getResources().getStringArray(R.array.listview_basetitle);
 
-        listview_text=new String[]{mnc, mcc, IMSI, deviceid,
+        listview_text = new String[]{mnc, mcc, IMSI, deviceid,
                 DeviceSoftwareVersion, networkopenratorname, SimSerialNumber,
                 phonetype, datastate, roaming};
 
-        listItems = getListItems();
-        basepage_adapter = new ListViewAdapter(basepage_context, listItems);
+        List<Map<String, Object>> listItems = getListItems();
+        ListViewAdapter basepage_adapter = new ListViewAdapter(basepage_context, listItems);
         basepage_listview.setAdapter(basepage_adapter);
     }
 
@@ -120,11 +113,24 @@ public class BasestPage extends Fragment {
         for (int i = 0; i < listview_img.length; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("imgItem_list", listview_img[i]);
-           // map.put("titleItem_list", listview_title[i]);
+            // map.put("titleItem_list", listview_title[i]);
             map.put("textItem_list", listview_text[i]);
             listItems.add(map);
         }
         return listItems;
     }
 
+    public boolean isMobileConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mMobileNetworkInfo = mConnectivityManager
+                    .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (mMobileNetworkInfo != null) {
+                System.out.println("手机连接State:====" + mMobileNetworkInfo.getState());
+                return mMobileNetworkInfo.isAvailable();
+            }
+        }
+        return false;
+    }
 }

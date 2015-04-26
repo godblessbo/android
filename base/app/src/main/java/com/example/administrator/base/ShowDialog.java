@@ -28,10 +28,6 @@ public class ShowDialog extends Activity {
         String trashtype = "疑似垃圾短信，请谨慎处理";
         if (flag == 2) {
             trashtype = "疑似伪基站短信，请谨慎处理";
-        } else if (flag == 3) {
-            trashtype = "疑似诈骗短信，请谨慎处理";
-        } else if (flag == 4) {
-            trashtype = "拦截到自定义短信";
         }
         new AlertDialog.Builder(ShowDialog.this)
                 .setMessage(trashtype + "\n" + smsBody)
@@ -43,10 +39,11 @@ public class ShowDialog extends Activity {
                                 SQLiteDatabase db = dbhelper.getWritableDatabase();
                                 values.put("recievenum", smsNumber);
                                 values.put("recievebody", smsBody);
-                                System.out.print("ShowDialog里面插入数据库之前的flag======== \n" + flag);
                                 if (flag == 2) {
                                     values.put("flag", 2);
-                                } else values.put("flag", 1);
+                                } else {
+                                    values.put("flag", 1);
+                                }
                                 db.insert("msg_table", null, values);
                                 dialog.dismiss();
                                 ShowDialog.this.finish();
